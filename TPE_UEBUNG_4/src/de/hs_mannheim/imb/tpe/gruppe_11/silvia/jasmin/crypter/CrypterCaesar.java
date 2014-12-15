@@ -8,7 +8,7 @@ import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.Illegal
  * @author Jasmin Cano, Silvia Yildiz
  *
  */
-class CrypterCaesar extends BaseCrypter implements Crypter {
+class CrypterCaesar extends CrypterBase implements Crypter {
 
 	final char keyChar;
 	
@@ -34,7 +34,7 @@ class CrypterCaesar extends BaseCrypter implements Crypter {
 			 * schlechter Programmerstil. Deshalb verwenden wir besser die strukturierte
 			 * Ausnahmebehandlung und lösen eine CrypterException aus.
 			 */
-			throw new CrypterException("illegal character found");
+			throw new IllegalArgumentException("illegal character found");
 		}
 		return (char)('A' + (((c - 'A') + shift) % CHARSET_LENGTH));
 	}
