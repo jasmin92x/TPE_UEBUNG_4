@@ -17,7 +17,7 @@ public class CrypterNull extends BaseCrypter {
 	void validateKey(String key) throws IllegalKeyException { }
 
 	@Override
-	char encode(char c) throws CrypterException {
+	char encrypt(char c) throws CrypterException {
 		if (c < 'A' || c > 'Z') {
 			/*
 			 * Wir könnten einen "unmöglichen" Wert wie 0 zurückgeben. Das wäre aber

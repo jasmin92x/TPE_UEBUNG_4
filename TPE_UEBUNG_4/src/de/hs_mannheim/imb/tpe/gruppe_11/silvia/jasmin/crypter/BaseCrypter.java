@@ -41,7 +41,7 @@ public abstract class BaseCrypter implements Crypter {
 	 * @return
 	 * @throws CrypterException 
 	 */
-	abstract char encode(char c) throws CrypterException;
+	abstract char encrypt(char c) throws CrypterException;
 
 	/**
 	 * Zeichenweise decodieren
@@ -63,7 +63,7 @@ public abstract class BaseCrypter implements Crypter {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < text.length(); ++i) {
 			try {
-				sb.append(encode(text.toUpperCase().charAt(i)));
+				sb.append(encrypt(text.toUpperCase().charAt(i)));
 			}
 			catch(CrypterException e) {
 				/*
@@ -124,6 +124,12 @@ public abstract class BaseCrypter implements Crypter {
 			retVal.add(decrypt(cypherText));
 		}
 		return retVal;
+	}
+	
+	void checkCharacterRange(char c) {
+		if (c < 'A' || c >'Z') {
+			throw new IllegalArgumentException();
+		}
 	}
 
 }

@@ -26,7 +26,7 @@ class CrypterCaesar extends BaseCrypter implements Crypter {
 	 * @throws CrypterException 
 	 */
 	@Override
-	char encode(char c) throws CrypterException {
+	char encrypt(char c) throws CrypterException {
 		byte shift = (byte)(keyChar - 'A');
 		if (c < 'A' || c > 'Z') {
 			/*
