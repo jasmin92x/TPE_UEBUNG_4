@@ -1,6 +1,5 @@
 package de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter;
 
-import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.CrypterException;
 import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.IllegalKeyException;
 /**
  * 
@@ -9,7 +8,7 @@ import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.Illegal
  */
 class CrypterNull extends CrypterBase {
 
-	CrypterNull(String key) throws IllegalKeyException {
+	public CrypterNull(String key) throws IllegalKeyException {
 		super(key);
 	}
 
@@ -17,13 +16,13 @@ class CrypterNull extends CrypterBase {
 	void validateKey(String key) throws IllegalKeyException { }
 
 	@Override
-	char encrypt(char c) throws IllegalArgumentException {
+	char encrypt(char c) {
 		checkCharacterRange(c);
 		return c;
 	}
 
 	@Override
-	char decrypt(char c) throws CrypterException {
+	char decrypt(char c) {
 		checkCharacterRange(c);
 		return c;
 	}

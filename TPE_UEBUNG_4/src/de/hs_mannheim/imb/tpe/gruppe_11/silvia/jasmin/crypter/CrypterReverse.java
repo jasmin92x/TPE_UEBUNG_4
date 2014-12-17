@@ -8,9 +8,9 @@ import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.Illegal
  * @author Jasmin Cano, Silvia Yildiz
  *
  */
-public class CrypterReverse extends CrypterBase {
+class CrypterReverse extends CrypterBase {
 	
-	CrypterReverse(String key) throws IllegalKeyException {
+	public CrypterReverse(String key) throws IllegalKeyException {
 		super(key);
 	}
 
@@ -24,7 +24,7 @@ public class CrypterReverse extends CrypterBase {
 	 * @see de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.BaseCrypter#encode(char)
 	 */
 	@Override
-	char encrypt(char c) throws CrypterException {
+	char encrypt(char c) {
 		checkCharacterRange(c);
 		return c;
 	}
@@ -33,10 +33,10 @@ public class CrypterReverse extends CrypterBase {
 	 * @see de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.BaseCrypter#decrypt(char)
 	 */
 	@Override
-	char decrypt(char c) throws CrypterException {
+	char decrypt(char c) {
 		return 0;
 	}
-	
+
 	/**
 	 * Wir verwenden die Basis-Implementierung encrypt(String), um eine um
 	 * ungültige Zeichen bereinigte Kopie von message zu erhalten, und kehren
@@ -45,10 +45,13 @@ public class CrypterReverse extends CrypterBase {
 	 * @return
 	 * @throws CrypterException 
 	 */
+
 	@Override
 	public String encrypt(String message) throws CrypterException {
-		StringBuilder sb = new StringBuilder(super.encrypt(message));
-		return sb.reverse().toString();
+		if (message == null) {
+			return null;
+		}
+		return new StringBuffer(super.encrypt(message)).reverse().toString();
 	}
 	
 	/**
@@ -61,5 +64,6 @@ public class CrypterReverse extends CrypterBase {
 	public String decrypt(String cypherText) throws CrypterException {
 		return encrypt(cypherText);
 	}
+
 
 }

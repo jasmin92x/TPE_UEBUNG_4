@@ -1,6 +1,4 @@
 package de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter;
-
-import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.CrypterException;
 import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.IllegalKeyException;
 
 /**
@@ -10,59 +8,37 @@ import de.hs_mannheim.imb.tpe.gruppe_11.silvia.jasmin.crypter.exceptions.Illegal
  */
 class CrypterCaesar extends CrypterBase implements Crypter {
 
-	final char keyChar;
+	byte shift;
 	
-	CrypterCaesar(String key) throws IllegalKeyException {
+	public CrypterCaesar(String key) throws IllegalKeyException {
 		super(key);
-		keyChar = key.charAt(0);
+		shift = (byte)(this.key.charAt(0) - 'A' + 1);
 	}
-
-	/**
-	 * Zeichenweise codieren
-	 * 
-	 * @param key
-	 * @param c
-	 * @return
-	 * @throws CrypterException 
-	 */
-	@Override
-	char encrypt(char c) throws CrypterException {
-		byte shift = (byte)(keyChar - 'A');
-		if (c < 'A' || c > 'Z') {
-			/*
-			 * Wir könnten einen "unmöglichen" Wert wie 0 zurückgeben. Das wäre aber
-			 * schlechter Programmerstil. Deshalb verwenden wir besser die strukturierte
-			 * Ausnahmebehandlung und lösen eine CrypterException aus.
-			 */
-			throw new IllegalArgumentException("illegal character found");
-		}
-		return (char)('A' + (((c - 'A') + shift) % CHARSET_LENGTH));
-	}
-
-	/**
-	 * Zeichenweise decodieren
-	 * @param key
-	 * @param c
-	 * @return
-	 * @throws CrypterException 
-	 */
-	@Override
-	char decrypt(char c) throws CrypterException {
-		byte shift = (byte)(keyChar - 'A');
-		if (c < 'A' || c >'Z') {
-			throw new CrypterException("illegal character found");
-		}
-		return (char)('A' + (((c - 'A') + CHARSET_LENGTH - shift) % CHARSET_LENGTH));
-	}
-
+	
 	@Override
 	void validateKey(String key) throws IllegalKeyException {
-		if (key == null || key.length() != 1) {
-			throw new IllegalKeyException("CAESAR-key darf nicht null oder leer sein");
+		if (key == null || key.length() == 0) {
+			throw new IllegalKeyException("CAESAR key must not be null or empty");
 		}
-		char c = key.charAt(0);
-		if (c < 'A' || c > 'Z') {
-			throw new IllegalKeyException("Illegal key value '" + key + "'");
+		if (key.length() > 1) {
+			throw new IllegalKeyException("CAESAR key must consist of exactly one character");
+		}
+		char keyChar = key.toUpperCase().charAt(0);
+		if (keyChar < 'A' || keyChar > 'Z') {
+			throw new IllegalKeyException("CAESAR key character must be between A and Z inclusively");
 		}
 	}
+	
+	@Override
+	char encrypt(char c) {
+		checkCharacterRange(c);
+		return (char)((c - 'A' + shift) % 26 + 'A');
+	}
+
+	@Override
+	char decrypt(char c) {
+		checkCharacterRange(c);
+		return (char)(((26 + c - 'A') - shift) % 26 + 'A');
+	}
+
 }
